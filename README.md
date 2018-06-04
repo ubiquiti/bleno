@@ -103,17 +103,22 @@ NOTE: ```bleno.state``` must be ```poweredOn``` before advertising is started. `
 var name = 'name';
 var serviceUuids = ['fffffffffffffffffffffffffffffff0']
 
-bleno.startAdvertising(name, serviceUuids[, callback(error)]);
+bleno.startAdvertising(name, serviceUuids, serviceData[, callback(error)]);
 ```
 
  __Note:__: there are limits on the name and service UUID's
 
   * name
-    * maximum 26 bytes
+    * maximum 26 bytes (it will be truncated to fit)
   * service UUID's
     * 1 128-bit service UUID
     * 1 128-bit service UUID + 2 16-bit service UUID's
     * 7 16-bit service UUID
+  * service data (up to 31 bytes)
+    * Each one takes 4 bytes + data length
+    * Required type - array of objects: `{uuid: [0x01, 0x02], data: [0x01]}`
+    * UUID has to be exactly 2 bytes long
+    * Data - maximum 27 bytes
 
 
 ##### Start advertising iBeacon
